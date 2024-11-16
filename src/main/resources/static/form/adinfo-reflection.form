@@ -1,0 +1,94 @@
+{
+  "components": [
+    {
+      "label": "Ad title",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1xgvlrq",
+        "columns": null
+      },
+      "id": "Field_0lhmsvy",
+      "key": "adTitle",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Ad Category",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0dqgcrn",
+        "columns": null
+      },
+      "id": "Field_0eugi6f",
+      "key": "adCategory",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Ad description",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_0seoknh",
+        "columns": null
+      },
+      "id": "Field_10inbft",
+      "key": "adDescription",
+      "validate": {
+        "required": false
+      }
+    },
+    {
+      "label": "Image view",
+      "type": "image",
+      "layout": {
+        "row": "Row_1epidqr",
+        "columns": null
+      },
+      "id": "Field_04100w1",
+      "properties": {},
+      "source": "imgUrl"
+    },
+    {
+      "values": [
+        {
+          "label": "Approval",
+          "value": "true"
+        },
+        {
+          "label": "Rejection",
+          "value": "false"
+        }
+      ],
+      "label": "Approval",
+      "type": "select",
+      "layout": {
+        "row": "Row_1tqipi8",
+        "columns": null
+      },
+      "id": "Field_0hr978b",
+      "key": "adApproval",
+      "defaultValue": "true"
+    },
+    {
+      "label": "Rejection Reason Comments",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0dhmyei",
+        "columns": null
+      },
+      "id": "Field_0t9nhyr",
+      "key": "rejectionReason"
+    }
+  ],
+  "type": "default",
+  "id": "Form_1clqs0d",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.25.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.21.0",
+  "schemaVersion": 16
+}

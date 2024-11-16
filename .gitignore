@@ -1,0 +1,27 @@
+# Ignore IntelliJ IDEA project files
+.idea/
+
+# Ignore database files
+*.mv.db
+*.h2.db
+
+# Ignore Maven target directory
+target/
+
+# Ignore logs
+*.log
+logs/
+
+# Ignore compiled Java class files
+*.class
+
+# Ignore temporary files
+*.tmp
+*.swp
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore Maven dependency cache
+.m2/

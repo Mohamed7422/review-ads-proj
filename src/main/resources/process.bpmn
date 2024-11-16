@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0fr9mxs" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.25.0">
+  <bpmn:process id="review-ads-proj-process" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:startEvent id="Event_16ew9yv">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="adTitle" label="Ad Title" type="string">
+            <camunda:properties />
+          </camunda:formField>
+          <camunda:formField id="adCategory" label="Ad Category" type="string" />
+          <camunda:formField id="adDescription" label="Ad Description" type="string" />
+          <camunda:formField id="imgUrl" label="Image Url" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_09bnboe</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Activity_0hqhmq9" name="Photo review" camunda:delegateExpression="#{photoReview}">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_037amec</bpmn:incoming>
+      <bpmn:outgoing>Flow_035ie0e</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_0qypyy1">
+      <bpmn:incoming>Flow_035ie0e</bpmn:incoming>
+      <bpmn:outgoing>Flow_1mbw3mx</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1eqddx7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="Event_0zbjz11">
+      <bpmn:incoming>Flow_1eqddx7</bpmn:incoming>
+      <bpmn:incoming>Flow_1at7r64</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Activity_0ni8o5x" name="Manual review">
+      <bpmn:incoming>Flow_1mbw3mx</bpmn:incoming>
+      <bpmn:outgoing>Flow_1at7r64</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_1dei1ex" name="Trigger Ad info">
+      <bpmn:incoming>Flow_09bnboe</bpmn:incoming>
+      <bpmn:outgoing>Flow_037amec</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_09bnboe" sourceRef="Event_16ew9yv" targetRef="Activity_1dei1ex" />
+    <bpmn:sequenceFlow id="Flow_037amec" sourceRef="Activity_1dei1ex" targetRef="Activity_0hqhmq9" />
+    <bpmn:sequenceFlow id="Flow_035ie0e" sourceRef="Activity_0hqhmq9" targetRef="Gateway_0qypyy1" />
+    <bpmn:sequenceFlow id="Flow_1mbw3mx" name="True=Approval" sourceRef="Gateway_0qypyy1" targetRef="Activity_0ni8o5x">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${reviewDecision == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1eqddx7" name="False=Ad Rejection" sourceRef="Gateway_0qypyy1" targetRef="Event_0zbjz11">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${reviewDecision == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1at7r64" sourceRef="Activity_0ni8o5x" targetRef="Event_0zbjz11" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="review-ads-proj-process">
+      <bpmndi:BPMNShape id="BPMNShape_0c0agwg" bpmnElement="Event_16ew9yv">
+        <dc:Bounds x="152" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0g2igco_di" bpmnElement="Activity_0hqhmq9">
+        <dc:Bounds x="400" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0qypyy1_di" bpmnElement="Gateway_0qypyy1" isMarkerVisible="true">
+        <dc:Bounds x="605" y="95" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0d1vlrn_di" bpmnElement="Activity_0ni8o5x">
+        <dc:Bounds x="760" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1bssjip_di" bpmnElement="Activity_1dei1ex">
+        <dc:Bounds x="240" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0zbjz11_di" bpmnElement="Event_0zbjz11">
+        <dc:Bounds x="792" y="212" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_09bnboe_di" bpmnElement="Flow_09bnboe">
+        <di:waypoint x="188" y="120" />
+        <di:waypoint x="240" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_037amec_di" bpmnElement="Flow_037amec">
+        <di:waypoint x="340" y="120" />
+        <di:waypoint x="400" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_035ie0e_di" bpmnElement="Flow_035ie0e">
+        <di:waypoint x="500" y="120" />
+        <di:waypoint x="605" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1mbw3mx_di" bpmnElement="Flow_1mbw3mx">
+        <di:waypoint x="655" y="120" />
+        <di:waypoint x="760" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="671" y="102" width="73" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1eqddx7_di" bpmnElement="Flow_1eqddx7">
+        <di:waypoint x="630" y="145" />
+        <di:waypoint x="630" y="230" />
+        <di:waypoint x="792" y="230" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="689" y="196" width="48" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1at7r64_di" bpmnElement="Flow_1at7r64">
+        <di:waypoint x="810" y="160" />
+        <di:waypoint x="810" y="212" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
